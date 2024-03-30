@@ -31,9 +31,9 @@ export default function CarDetails() {
       <hr />
       <p>Year: {car.year}</p>
       <hr />
-      <button className="goToBackBtn">
-        <Link href={`/`}>Go back</Link>
-      </button>
+      <Link href={`/`}>
+        <button className="goToBackBtn">Go Back</button>
+      </Link>
     </div>
   );
 }
