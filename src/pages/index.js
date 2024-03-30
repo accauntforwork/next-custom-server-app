@@ -1,25 +1,35 @@
-import React from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import carsData from "../cars.json";
 
-const cars = require("../cars.json").cars;
-
-export default function HomePage() {
-  const router = useRouter();
-
-  const handleCarClick = (car) => {
-    router.push(`/cars/${car.model}`);
-  };
-
+export default function Home({ cars }) {
   return (
-    <div>
-      <h1>List of Cars</h1>
-      <ul>
+    <div className="carlistContainer">
+      <h1 className="carlistHeading">Car List</h1>
+      <ul className="carList">
         {cars.map((car) => (
-          <li key={car.model}>
-            <button onClick={() => handleCarClick(car)}>{car.model}</button>
-          </li>
+          <Link href={`/cars/${encodeURIComponent(car.model)}`}>
+            <li key={car.model} className="carCard">
+              <span>
+                {car.brand} {car.model}
+              </span>
+              <span
+                className="indicator"
+                style={{
+                  background: `${car.color}`,
+                }}
+              ></span>
+            </li>
+          </Link>
         ))}
       </ul>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  // Fetch car data from cars.json
+  const cars = carsData.cars;
+  return {
+    props: { cars },
+  };
 }
